@@ -45,64 +45,64 @@ public class MobileAppUserVehicleImageService {
 	public static final SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	
-	public Object getVehicleImageData(DynamoDBMapper dynamoDBMapper, String appName, String email, String vehicleId,String vehicleImageBucketName) 
-	{
-		BSROWebServiceResponse bsroWebserviceResponse = new BSROWebServiceResponse();
-		String encodingPrefix = "data:image/jpg;base64,";
-		String imageFileName = "";
-		try {
-			if(!ValidationUtility.isEmailValid(email)) 
-			{
-				bsroWebserviceResponse.setStatusCode(BSROWebServiceResponseCode.VALIDATION_ERROR.toString());
-				return setStatusAndMessage(bsroWebserviceResponse, ValidationConstants.USER_EMAIL_INVALID);
-			}
-			email = email.toLowerCase();
-			MWSUser mwsUser = getMWSUser(dynamoDBMapper, email, appName);
-			
-			if(mwsUser == null) {
-				bsroWebserviceResponse.setStatusCode(BSROWebServiceResponseCode.VALIDATION_ERROR.toString());
-				return setStatusAndMessage(bsroWebserviceResponse, ValidationConstants.USER_DOES_NOT_EXIST);
-			} else {
-				if ((mwsUser.getDescFlag() != null) && (mwsUser.getDescFlag().equals("B") || mwsUser.getDescFlag().equals("R")))
-				{
-					String md5UserID = ValidationUtility.convertToMD5(mwsUser.getUserId().toString());
- 					imageFileName = md5UserID + "_" + vehicleId + ".jpg";
- 					System.out.println("MobileAppUserService : getVehicleImageData() : v : " + imageFileName);
- 					AmazonS3 s3Client = new AmazonS3Client();
-					S3Object object = s3Client.getObject(new GetObjectRequest(vehicleImageBucketName, imageFileName));
-					
-					s3Client.getUrl(vehicleImageBucketName, imageFileName).toString();
-					 
-					InputStream objectData = object.getObjectContent();
- 					System.out.println("MobileAppUserService : getVehicleImageData() : objectData : " + objectData);
-					//Object jsonData = new ObjectMapper().readValue(convertStreamToString(objectData), Object.class);
-
- 					BSROWebServiceResponse response = new BSROWebServiceResponse();
- 					byte[] byteArray = IOUtils.toByteArray(objectData);
- 					String imageDataURI = encodingPrefix + Base64.encodeBase64String(byteArray);
-  					response.setPayload(imageDataURI);
-					 response.setStatusCode(BSROWebServiceResponseCode.SUCCESSFUL.name());
-					return response;
-					 
-  				}
-				else 
-  				{
-					bsroWebserviceResponse.setStatusCode(BSROWebServiceResponseCode.VALIDATION_ERROR.toString());
-					return setStatusAndMessage(bsroWebserviceResponse, ValidationConstants.USER_HAS_NO_BACKUP_DATA);
-				}
-			}
-		} 
-		catch(Exception e) 
-		{	
-			System.out.println("MobileAppUserService : getVehicleImageData() : Exception : " + e.getMessage());
-			bsroWebserviceResponse.setStatusCode(BSROWebServiceResponseCode.UNKNOWN_ERROR.toString());
-			bsroWebserviceResponse.setSTATUS(ValidationConstants.UNKNOWN_ERROR);
-			return bsroWebserviceResponse;
-		}
-		 
- 		
-	}
-	
+//	public Object getVehicleImageData(DynamoDBMapper dynamoDBMapper, String appName, String email, String vehicleId,String vehicleImageBucketName) 
+//	{
+//		BSROWebServiceResponse bsroWebserviceResponse = new BSROWebServiceResponse();
+//		String encodingPrefix = "data:image/jpg;base64,";
+//		String imageFileName = "";
+//		try {
+//			if(!ValidationUtility.isEmailValid(email)) 
+//			{
+//				bsroWebserviceResponse.setStatusCode(BSROWebServiceResponseCode.VALIDATION_ERROR.toString());
+//				return setStatusAndMessage(bsroWebserviceResponse, ValidationConstants.USER_EMAIL_INVALID);
+//			}
+//			email = email.toLowerCase();
+//			MWSUser mwsUser = getMWSUser(dynamoDBMapper, email, appName);
+//			
+//			if(mwsUser == null) {
+//				bsroWebserviceResponse.setStatusCode(BSROWebServiceResponseCode.VALIDATION_ERROR.toString());
+//				return setStatusAndMessage(bsroWebserviceResponse, ValidationConstants.USER_DOES_NOT_EXIST);
+//			} else {
+//				if ((mwsUser.getDescFlag() != null) && (mwsUser.getDescFlag().equals("B") || mwsUser.getDescFlag().equals("R")))
+//				{
+//					String md5UserID = ValidationUtility.convertToMD5(mwsUser.getUserId().toString());
+// 					imageFileName = md5UserID + "_" + vehicleId + ".jpg";
+// 					System.out.println("MobileAppUserService : getVehicleImageData() : v : " + imageFileName);
+// 					AmazonS3 s3Client = new AmazonS3Client();
+//					S3Object object = s3Client.getObject(new GetObjectRequest(vehicleImageBucketName, imageFileName));
+//					
+//					s3Client.getUrl(vehicleImageBucketName, imageFileName).toString();
+//					 
+//					InputStream objectData = object.getObjectContent();
+// 					System.out.println("MobileAppUserService : getVehicleImageData() : objectData : " + objectData);
+//					//Object jsonData = new ObjectMapper().readValue(convertStreamToString(objectData), Object.class);
+//
+// 					BSROWebServiceResponse response = new BSROWebServiceResponse();
+// 					byte[] byteArray = IOUtils.toByteArray(objectData);
+// 					String imageDataURI = encodingPrefix + Base64.encodeBase64String(byteArray);
+//  					response.setPayload(imageDataURI);
+//					 response.setStatusCode(BSROWebServiceResponseCode.SUCCESSFUL.name());
+//					return response;
+//					 
+//  				}
+//				else 
+//  				{
+//					bsroWebserviceResponse.setStatusCode(BSROWebServiceResponseCode.VALIDATION_ERROR.toString());
+//					return setStatusAndMessage(bsroWebserviceResponse, ValidationConstants.USER_HAS_NO_BACKUP_DATA);
+//				}
+//			}
+//		} 
+//		catch(Exception e) 
+//		{	
+//			System.out.println("MobileAppUserService : getVehicleImageData() : Exception : " + e.getMessage());
+//			bsroWebserviceResponse.setStatusCode(BSROWebServiceResponseCode.UNKNOWN_ERROR.toString());
+//			bsroWebserviceResponse.setSTATUS(ValidationConstants.UNKNOWN_ERROR);
+//			return bsroWebserviceResponse;
+//		}
+//		 
+// 		
+//	}
+//	
 	
 	
 	

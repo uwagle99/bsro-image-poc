@@ -19,7 +19,7 @@ import org.apache.commons.io.IOUtils;
 
 public class BSROMobileAppUserVehicleImageFunctionHandler implements RequestHandler<Object,Object>
 {
-	static final String GET_VEHICLE_IMAGE = "get-vehicle-image";
+	//static final String GET_VEHICLE_IMAGE = "get-vehicle-image";
 	static final String SAVE_VEHICLE_IMAGE = "save-vehicle-image";
 	static final String DELETE_VEHICLE_IMAGE = "delete-vehicle-image";
 
@@ -102,11 +102,11 @@ public class BSROMobileAppUserVehicleImageFunctionHandler implements RequestHand
 			System.out.println("Destination BucketName:"+ image_s3_destination_bucket_name);
 
 			switch(serviceFunction) {
-				case GET_VEHICLE_IMAGE:
-					appName = params.get("appName");
-					email = params.get("email");
-					vehicleId =  params.get("vehicleId");
-					return mobileAppUserService.getVehicleImageData(dynamoDBMapper, appName, email, vehicleId,image_s3_destination_bucket_name);
+//				case GET_VEHICLE_IMAGE:
+//					appName = params.get("appName");
+//					email = params.get("email");
+//					vehicleId =  params.get("vehicleId");
+//					return mobileAppUserService.getVehicleImageData(dynamoDBMapper, appName, email, vehicleId,image_s3_destination_bucket_name);
 				case SAVE_VEHICLE_IMAGE:
 					appName = params.get("appName");
 					email = params.get("email");
