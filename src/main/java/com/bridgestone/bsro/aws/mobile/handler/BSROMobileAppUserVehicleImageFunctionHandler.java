@@ -95,8 +95,8 @@ public class BSROMobileAppUserVehicleImageFunctionHandler implements RequestHand
 			String password = "";
 			String data = "";
 			String vehicleId = "";
-			String image_s3_source_bucket_name = properties.getProperty("image_s3_bucket_name") + "-" + environment;
-			String image_s3_destination_bucket_name = properties.getProperty("image_s3_bucket_name") + "-" + environment + "-" + "resized";
+			String image_s3_source_bucket_name = properties.getProperty("source_image_s3_bucket_name") + "-" + environment;
+			String image_s3_destination_bucket_name = properties.getProperty("destination_image_s3_bucket_name") + "-" + environment;
 
 			System.out.println("Source BucketName:"+ image_s3_source_bucket_name);
 			System.out.println("Destination BucketName:"+ image_s3_destination_bucket_name);

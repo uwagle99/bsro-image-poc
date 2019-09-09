@@ -43,19 +43,24 @@ public class ValidationUtility {
 	}
 	
 	public static String convertToMD5(String userID){
-		String hash = "";
+		 
+		StringBuffer hash = new StringBuffer();
 		try {
-			MessageDigest md = MessageDigest.getInstance("MD5"); 
-			md.update(userID.getBytes("UTF-8"));
-			byte raw[] = md.digest(); 
-			hash = (new BASE64Encoder()).encode(raw);
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
+		MessageDigest md = MessageDigest.getInstance("MD5");
+		md.update(userID.getBytes());
+		byte[] digest = md.digest();
+		for (byte b : digest) {
+			hash.append(String.format("%02x", b & 0xff));
+		}
+		System.out.println("ValidationUtility : convertToMD5 hash : : " + hash.toString());
+
+		}
+		catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-		return hash;
+		return hash.toString();
 	}
+ 
 	
     public BSROWebServiceResponse getValidationMessage(String message){
 		BSROWebServiceResponse response = new BSROWebServiceResponse();
